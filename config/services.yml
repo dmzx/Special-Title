@@ -1,0 +1,13 @@
+services:
+    dmzx.specialtitle.listener:
+        class: dmzx\specialtitle\event\listener
+        arguments:
+            - @request
+            - @template
+            - @user
+            - @auth
+            - @dbal.conn
+            - %core.root_path%
+            - %core.php_ext%
+        tags:
+            - { name: event.listener }
