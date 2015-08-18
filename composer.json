@@ -1,8 +1,8 @@
 {
 	"name": "dmzx/specialtitle",
 	"type": "phpbb-extension",
-	"description": "This extension allows users to add a special title in UCP to their username.",
-	"version": "1.0.0",
+	"description": "This extension allows users to add a special title in UCP.",
+	"version": "1.0.1",
 	"time": "2015-08-15",
 	"keywords": ["phpbb", "extension", "specialtitle"],
 	"license": "GPL-2.0",

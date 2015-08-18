@@ -73,11 +73,52 @@ class listener implements EventSubscriberInterface
 	static public function getSubscribedEvents()
 	{
 		return array(
+			'core.user_setup'							=> 'load_language_on_setup',
+			'core.acp_users_modify_profile'				=> 'acp_user_title_profile',
+			'core.acp_users_profile_modify_sql_ary'		=> 'info_modify_sql_ary',
+			'core.modify_username_string'				=> 'modify_username_string',
 			'core.ucp_profile_modify_profile_info'		=> 'modify_profile_info',
 			'core.ucp_profile_validate_profile_info'	=> 'validate_profile_info',
 			'core.ucp_profile_info_modify_sql_ary'		=> 'info_modify_sql_ary',
-			'core.modify_username_string'				=> 'modify_username_string',
 		);
+	}
+
+	/**
+	 * Load language on setup for special title
+	 *
+	 * @param object $event The event object
+	 * @return null
+	 * @access public
+	 */
+	public function load_language_on_setup($event)
+	{
+		$lang_set_ext = $event['lang_set_ext'];
+		$lang_set_ext[] = array(
+			'ext_name' => 'dmzx/specialtitle',
+			'lang_set' => 'common',
+		);
+		$event['lang_set_ext'] = $lang_set_ext;
+	}
+
+	/**
+	 * Allow admins to change special title
+	 *
+	 * @param object $event The event object
+	 * @return null
+	 * @access public
+	 */
+	public function acp_user_title_profile($event)
+	{
+		// Request the user option vars and add them to the data array
+		$event['data'] = array_merge($event['data'], array(
+			'user_special_title'	=> $this->request->variable('user_special_title', $event['user_row']['user_special_title'], true),
+			'user_special_title_colour'	=> $this->request->variable('user_special_title_colour', $event['user_row']['user_special_title_colour'], true),
+		));
+
+		$this->template->assign_vars(array(
+			'SPECIAL_TITLE'			=> $event['data']['user_special_title'],
+			'SPECIAL_TITLE_COLOUR'	=> $event['data']['user_special_title_colour'],
+		));
 	}
 
 	public function modify_username_string($event)
@@ -120,7 +161,7 @@ class listener implements EventSubscriberInterface
 			return;
 		}
 
-		$_profile_cache_special_title = '<a href="{PROFILE_URL}" style="color: {USERNAME_COLOUR};" class="username-coloured">{USERNAME}'.	'</a><span class="specialtitle" style=" color: #' . $specialtitle_colour . ';" > ' . $specialtitle . '</span>';
+		$_profile_cache_special_title = '<a href="{PROFILE_URL}" style="color: {USERNAME_COLOUR};" class="username-coloured">{USERNAME}' . '</a><span class="specialtitle" style=" color: #' . $specialtitle_colour . ';" > ' . $specialtitle . '</span>';
 
 		$event['username_string'] = str_replace(array('{PROFILE_URL}', '{USERNAME_COLOUR}', '{USERNAME}'), array($profile_url, $event['username_colour'], $event['username']), (!$event['username_colour']) ? $event['_profile_cache']['tpl_profile'] : $_profile_cache_special_title);
 	}
@@ -134,8 +175,6 @@ class listener implements EventSubscriberInterface
 	*/
 	public function modify_profile_info($event)
 	{
-		$this->user->add_lang_ext('dmzx/specialtitle', 'common');
-
 		// Request the user option vars and add them to the data array
 		$event['data'] = array_merge($event['data'], array(
 			'user_special_title'		=> $this->request->variable('user_special_title', $this->user->data['user_special_title'], true),
