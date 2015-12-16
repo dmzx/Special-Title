@@ -1,5 +1,7 @@
 # phpBB Special Title Extension
 
+[![Build Status](https://travis-ci.org/dmzx/Special-Title.svg?branch=master)](https://travis-ci.org/dmzx/Special-Title)
+
 ## Install
 
 1. Download the latest release and Unzip the downloaded release.
