@@ -74,6 +74,7 @@ class listener implements EventSubscriberInterface
 	{
 		return array(
 			'core.user_setup'							=> 'load_language_on_setup',
+			'core.permissions'							=> 'add_permission',
 			'core.acp_users_modify_profile'				=> 'acp_user_title_profile',
 			'core.acp_users_profile_modify_sql_ary'		=> 'info_modify_sql_ary',
 			'core.modify_username_string'				=> 'modify_username_string',
@@ -98,6 +99,20 @@ class listener implements EventSubscriberInterface
 			'lang_set' => 'common',
 		);
 		$event['lang_set_ext'] = $lang_set_ext;
+	}
+	
+	/**
+	* Add permissions
+	*
+	* @param object $event The event object
+	* @return null
+	* @access public
+	*/
+	public function add_permission($event)
+	{
+		$permissions = $event['permissions'];
+		$permissions['u_specialtitle_use'] = array('lang' => 'ACL_U_SPECIALTITLE_USE', 'cat' => 'misc');
+		$event['permissions'] = $permissions;
 	}
 
 	/**

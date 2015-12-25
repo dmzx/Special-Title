@@ -5,9 +5,11 @@
 * @copyright (c) 2015 dmzx - http://www.dmzx-web.net
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *
-* Translated By : Bassel Taha Alhitary - www.alhitary.net
 */
 
+/**
+* DO NOT CHANGE
+*/
 if (!defined('IN_PHPBB'))
 {
 	exit;
@@ -29,10 +31,11 @@ if (empty($lang) || !is_array($lang))
 // You do not need this where single placeholders are used, e.g. 'Message %d' is fine
 // equally where a string contains only two placeholders which are used to wrap text
 // in a url you again do not need to specify an order e.g., 'Click %sHERE%s' is fine
+//
+// Some characters you may want to copy&paste:
+// ’ » “ ” …
+//
 
 $lang = array_merge($lang, array(
-	'SPECIAL_TITLE'				 	=> 'العنوان المميز ',
-	'SPECIAL_TITLE_EXPLAIN'		 	=> '<em>سيتم عرض هذا العنوان المميز بجانب إسم المستخدم ويتكون من 8 حروف كحد أقصى.</em>',
-	'SPECIAL_TITLE_COLOUR'			=> 'لون العنوان المميز ',
-	'SPECIAL_TITLE_COLOUR_EXPLAIN'	=> '<em>حدد اللون الذي تريد بالنقر على الحقل الملون أو أدخل رقم اللون المُحدد مباشرة.</em>',
+	'ACL_U_SPECIALTITLE_USE'		=> 'Kan använda specialtitel',
 ));

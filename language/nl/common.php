@@ -30,7 +30,6 @@ if (empty($lang) || !is_array($lang))
 // in a url you again do not need to specify an order e.g., 'Click %sHERE%s' is fine
 
 $lang = array_merge($lang, array(
-	'ACL_U_SPECIALTITLE_USE'		=> 'Kan speciale titel gebruiken',
 	'SPECIAL_TITLE'				 	=> 'Speciale titel',
 	'SPECIAL_TITLE_EXPLAIN'		 	=> '<em>korte titel naast gebruikersnaam (max. 8 karakters)</em>',
 	'SPECIAL_TITLE_COLOUR'			=> 'Speciale titel kleur',
