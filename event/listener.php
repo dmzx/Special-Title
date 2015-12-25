@@ -100,7 +100,7 @@ class listener implements EventSubscriberInterface
 		);
 		$event['lang_set_ext'] = $lang_set_ext;
 	}
-	
+
 	/**
 	* Add permissions
 	*
