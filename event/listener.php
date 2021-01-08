@@ -9,14 +9,8 @@
 
 namespace dmzx\specialtitle\event;
 
-/**
-* @ignore
-*/
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-/**
-* Event listener
-*/
 class listener implements EventSubscriberInterface
 {
 	/** @var \phpbb\request\request */
@@ -52,7 +46,15 @@ class listener implements EventSubscriberInterface
 	* @param string							 	$php_ext		phpEx
 	*
 	*/
-	public function __construct(\phpbb\request\request $request, \phpbb\template\template $template, \phpbb\user $user, \phpbb\auth\auth $auth, \phpbb\db\driver\driver_interface $db, $phpbb_root_path, $php_ext)
+	public function __construct(
+		\phpbb\request\request $request,
+		\phpbb\template\template $template,
+		\phpbb\user $user,
+		\phpbb\auth\auth $auth,
+		\phpbb\db\driver\driver_interface $db,
+		$phpbb_root_path,
+		$php_ext
+	)
 	{
 		$this->request = $request;
 		$this->template = $template;
@@ -140,16 +142,14 @@ class listener implements EventSubscriberInterface
 	{
 		$modes = array('profile' => 1, 'full' => 1);
 		$mode = $event['mode'];
+
 		if (!isset($modes[$mode]))
 		{
 			return;
 		}
 		$user_id = (int) $event['user_id'];
-		if (
-			!$user_id ||
-			$user_id == ANONYMOUS ||
-			($this->user->data['user_id'] != ANONYMOUS && !$this->auth->acl_get('u_viewprofile'))
-		)
+
+		if (!$user_id || $user_id == ANONYMOUS || ($this->user->data['user_id'] != ANONYMOUS && !$this->auth->acl_get('u_viewprofile')))
 		{
 			return;
 		}
@@ -158,7 +158,7 @@ class listener implements EventSubscriberInterface
 		$sql = 'SELECT *
 			FROM ' . USERS_TABLE . '
 			WHERE user_id = ' . (int) $user_id;
-		$result = $this->db->sql_query($sql);
+		$result = $this->db->sql_query($sql, 30);
 		while ($row = $this->db->sql_fetchrow($result))
 		{
 			$specialtitle =	$row['user_special_title'];
