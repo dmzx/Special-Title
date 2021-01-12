@@ -2,67 +2,72 @@
 /**
 *
 * @package phpBB Extension - Special Title
-* @copyright (c) 2015 dmzx - http://www.dmzx-web.net
+* @copyright (c) 2015 dmzx - https://www.dmzx-web.net
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *
 */
 
 namespace dmzx\specialtitle\event;
 
+use phpbb\request\request_interface;
+use phpbb\template\template;
+use phpbb\user;
+use phpbb\auth\auth;
+use phpbb\db\driver\driver_interface as db_interface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class listener implements EventSubscriberInterface
 {
-	/** @var \phpbb\request\request */
+	/** @var request_interface */
 	protected $request;
 
-	/** @var \phpbb\template\template */
+	/** @var template */
 	protected $template;
 
-	/** @var \phpbb\user */
+	/** @var user */
 	protected $user;
 
-	/** @var \phpbb\auth\auth */
+	/** @var auth */
 	protected $auth;
 
-	/** @var \phpbb\db\driver\driver_interface */
+	/** @var driver_interface */
 	protected $db;
 
-	/** @var string phpBB root path */
+	/** @var string */
 	protected $phpbb_root_path;
 
-	/** @var string phpEx */
+	/** @var string */
 	protected $php_ext;
 
 	/**
 	* Constructor
 	*
-	* @param \phpbb\request\request				$request		Request object
-	* @param \phpbb\template\template			$template		Template object
-	* @param \phpbb\user						$user			User object
-	* @param \phpbb\auth\auth					$auth			Auth object
-	* @param \phpbb\db\driver\driver			$db				Database object
-	* @param string							 	$phpbb_root_path		phpBB root path
-	* @param string							 	$php_ext		phpEx
+	* @param request_interface 		$request
+	* @param template				$template
+	* @param user					$user
+	* @param auth					$auth
+	* @param db_interface			$db
+	* @param string					$phpbb_root_path
+	* @param string					$php_ext
 	*
 	*/
 	public function __construct(
-		\phpbb\request\request $request,
-		\phpbb\template\template $template,
-		\phpbb\user $user,
-		\phpbb\auth\auth $auth,
-		\phpbb\db\driver\driver_interface $db,
+		request_interface $request,
+		template $template,
+		user $user,
+		auth $auth,
+		db_interface $db,
 		$phpbb_root_path,
 		$php_ext
 	)
 	{
-		$this->request = $request;
-		$this->template = $template;
-		$this->user = $user;
-		$this->auth = $auth;
-		$this->db = $db;
-		$this->phpbb_root_path = $phpbb_root_path;
-		$this->php_ext = $php_ext;
+		$this->request 			= $request;
+		$this->template 		= $template;
+		$this->user 			= $user;
+		$this->auth 			= $auth;
+		$this->db 				= $db;
+		$this->phpbb_root_path 	= $phpbb_root_path;
+		$this->php_ext 			= $php_ext;
 	}
 
 	/**
@@ -167,7 +172,9 @@ class listener implements EventSubscriberInterface
 		}
 		$this->db->sql_freeresult($result);
 
-		$profile_url = append_sid("{$this->phpbb_root_path}memberlist.{$this->php_ext}", 'mode=viewprofile&amp;u=' . (int) $user_id);
+		$board_url = generate_board_url();
+
+		$profile_url = append_sid("{$board_url}/memberlist.{$this->php_ext}", 'mode=viewprofile&amp;u=' . (int) $user_id);
 
 		// Return profile
 		if ($mode == 'profile')

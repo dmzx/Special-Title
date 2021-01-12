@@ -2,9 +2,9 @@
 	"name": "dmzx/specialtitle",
 	"type": "phpbb-extension",
 	"description": "This extension allows users to add a special title in UCP.",
-	"homepage": "http://www.dmzx-web.net",
-	"version": "1.0.2",
-	"time": "2021-01-07",
+	"homepage": "https://www.dmzx-web.net",
+	"version": "1.0.3",
+	"time": "2021-01-11",
 	"keywords": [
 		"phpbb",
 		"extension",
